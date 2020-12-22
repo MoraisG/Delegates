@@ -6,10 +6,12 @@ uses Delegates.interfaces;
 
 type
   TSimpleAccess = class(TInterfacedObject, IAccess)
+  private
+    FLists : String;
   public
     constructor Create();
     destructor Destroy; override;
-    function List: String;
+    function List(Value : String): IAccess;
     function AsString: string;
     class function New(): IAccess;
   end;
@@ -20,7 +22,7 @@ implementation
 
 function TSimpleAccess.AsString: string;
 begin
-  Result := Self.ClassName;
+  Result := FLists;
 end;
 
 constructor TSimpleAccess.Create();
@@ -34,9 +36,10 @@ begin
   inherited;
 end;
 
-function TSimpleAccess.List: String;
+function TSimpleAccess.List(Value : String): IAccess;
 begin
-  Result := 'Lista';
+  Result := Self;
+  FLists := Value;
 end;
 
 class function TSimpleAccess.New(): IAccess;

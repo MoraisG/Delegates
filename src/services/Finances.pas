@@ -6,9 +6,12 @@ uses Delegates.interfaces;
 
 type
   TSimpleFinances = class(TInterfacedObject, IFinances)
+  private
+  FCurrent : Currency;
   public
     constructor Create();
     destructor Destroy; override;
+    function SetCurrent(Value : Currency) : IFinances;
     function Current: Currency;
     function AsString: string;
     class function New(): IFinances;
@@ -16,12 +19,13 @@ type
   end;
 
 implementation
-
+  uses
+  System.SysUtils;
 { TSimpleFinances }
 
 function TSimpleFinances.AsString: string;
 begin
-  Result := Self.ClassName;
+  Result := 'R$ ' + FormatCurr('0.00',FCurrent);
 end;
 
 constructor TSimpleFinances.Create();
@@ -31,7 +35,7 @@ end;
 
 function TSimpleFinances.Current: Currency;
 begin
-  Result := 200;
+  Result := FCurrent;
 end;
 
 destructor TSimpleFinances.Destroy;
@@ -43,6 +47,12 @@ end;
 class function TSimpleFinances.New(): IFinances;
 begin
   Result := Self.Create();
+end;
+
+function TSimpleFinances.SetCurrent(Value: Currency): IFinances;
+begin
+ Result:= self;
+ FCurrent := Value;
 end;
 
 end.
