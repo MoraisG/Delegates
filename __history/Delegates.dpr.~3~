@@ -1,0 +1,16 @@
+program Delegates;
+
+uses
+  Vcl.Forms,
+  Main in 'src\view\Main.pas' {Form1},
+  Delegates.interfaces in 'src\interfaces\Delegates.interfaces.pas',
+  Client in 'src\services\Client.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm1, Form1);
+  Application.Run;
+end.
